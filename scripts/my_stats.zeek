@@ -8,6 +8,7 @@ export {
 type MyStatsInfo: record 
     {
     ts:                         time        &log;
+    node:                       string      &log;
     variable:                   string      &log;
     size:                       count       &log;
     };
@@ -22,6 +23,7 @@ event dump_global_stats()
         i$ts = current_time();
         i$variable = key;
         i$size = gs[key];
+        i$node = Cluster::node;
         Log::write(MY_STATS_LOG, i);
         }
     schedule 1 min { dump_global_stats() };
