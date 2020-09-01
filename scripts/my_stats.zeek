@@ -9,7 +9,7 @@ type MyStatsInfo: record
     {
     ts:                         time        &log;
     node:                       string      &log;
-    module_name:                string      &log;
+    module_name:                string      &log &optional;
     variable:                   string      &log;
     size:                       count       &log;
     };
@@ -23,8 +23,11 @@ event dump_global_stats()
         {
         i$ts = current_time();
         local split_key = split_string(key, /::/);
-        i$module_name = split_key[0];
-        i$variable = split_key[1];
+        if (|split_key| > 1)
+            {
+            i$module_name = split_key[0];
+            }
+        i$variable = key;
         i$size = gs[key];
         i$node = Cluster::node;
         Log::write(MY_STATS_LOG, i);
