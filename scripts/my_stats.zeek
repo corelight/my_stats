@@ -8,16 +8,22 @@ export {
 type MyStatsInfo: record 
     {
     ts:                         time        &log;
-    global_sizes:               string      &log;
+    variable:                   string      &log;
+    size:                       count       &log;
     };
 
 event dump_global_stats()
     {
     # Cluster::log(cat(global_sizes()));
     local i: MyStatsInfo;
-    i$ts = current_time();
-    i$global_sizes = cat(global_sizes());
-    Log::write(MY_STATS_LOG, i);
+    local gs = global_sizes();
+    for (key,val in gs)
+        {
+        i$ts = current_time();
+        i$variable = key;
+        i$size = gs[key];
+        Log::write(MY_STATS_LOG, i);
+        }
     schedule 1 min { dump_global_stats() };
     }
 
