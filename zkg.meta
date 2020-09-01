@@ -1,0 +1,4 @@
+[package]
+description = This package dumps stats for troubleshooting.
+tags = stats
+script_dir = scripts
