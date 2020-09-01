@@ -6,5 +6,5 @@ export {
 
 event zeek_init()
     {
-    Cluster::log(global_sizes());
+    Cluster::log(cat(global_sizes()));
     }
