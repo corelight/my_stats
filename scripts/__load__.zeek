@@ -1,1 +1,1 @@
-@load ./dump_stats
+@load ./my_stats
