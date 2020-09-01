@@ -4,10 +4,14 @@ export {
     redef enum Log::ID += { MY_STATS_LOG };
 }
 
+# Used to track executions for easier sorting later.
+global current_run: count = 0;
+
 # Output record
 type MyStatsInfo: record 
     {
     ts:                         time        &log;
+    run:                        count       &log;
     node:                       string      &log;
     module_name:                string      &log &optional;
     variable:                   string      &log;
@@ -18,6 +22,8 @@ event dump_global_stats()
     {
     # Cluster::log(cat(global_sizes()));
     local i: MyStatsInfo;
+    i$run = current_run;
+    current_run += 1;
     local gs = global_sizes();
     for (key,val in gs)
         {
