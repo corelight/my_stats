@@ -21,7 +21,7 @@ type MyStatsInfo: record
 event dump_global_stats()
     {
     # Cluster::log(cat(global_sizes()));
-    local i: MyStatsInfo;
+    local i: MyStatsInfo = MyStatsInfo();
     i$run = current_run;
     current_run += 1;
     local gs = global_sizes();
