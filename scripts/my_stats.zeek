@@ -24,7 +24,7 @@ event dump_global_stats()
     local gs = global_sizes();
     for (key,val in gs)
         {
-        local i: MyStatsInfo = MyStatsInfo([ts=current_time(), $run=current_run, 
+        local i: MyStatsInfo = MyStatsInfo([$ts=current_time(), $run=current_run, 
                                             $node=Cluster::node, $variable=key, $size=val]);
         local split_key = split_string(key, /::/);
         if (|split_key| > 1)
