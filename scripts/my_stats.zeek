@@ -20,22 +20,17 @@ type MyStatsInfo: record
 
 event dump_global_stats()
     {
-    # Cluster::log(cat(global_sizes()));
-    local i: MyStatsInfo = MyStatsInfo();
-    i$run = current_run;
     current_run += 1;
     local gs = global_sizes();
     for (key,val in gs)
         {
-        i$ts = current_time();
+        local i: MyStatsInfo = MyStatsInfo([ts=current_time(), $run=current_run, 
+                                            $node=Cluster::node, $variable=key, $size=val]);
         local split_key = split_string(key, /::/);
         if (|split_key| > 1)
             {
             i$module_name = split_key[0];
             }
-        i$variable = key;
-        i$size = gs[key];
-        i$node = Cluster::node;
         Log::write(MY_STATS_LOG, i);
         }
     schedule 1 min { dump_global_stats() };
