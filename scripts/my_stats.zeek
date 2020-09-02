@@ -33,10 +33,6 @@ event dump_global_stats()
             {
             i$module_name = split_key[0];
             }
-        else
-            {
-            i$module_name = "";
-            }
         i$variable = key;
         i$size = gs[key];
         i$node = Cluster::node;
