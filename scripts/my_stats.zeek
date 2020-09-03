@@ -21,7 +21,10 @@ type MyStatsInfo: record
 event dump_global_stats()
     {
     current_run += 1;
+    local start_time = current_time();
     local gs = global_sizes();
+    local end_time = current_time();
+    Cluster::Log(fmt("global_sizes() took %s seconds to run.", end_time-start_time));
     for (key,val in gs)
         {
         local i: MyStatsInfo;
