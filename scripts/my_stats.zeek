@@ -2,6 +2,8 @@ module my_stats;
 
 export {
     redef enum Log::ID += { MY_STATS_LOG };
+    # This is how often global_sizes() is called and reported.
+    global run_interval: interval = 1 min;
 }
 
 # Used to track executions for easier sorting later.
@@ -37,7 +39,7 @@ event dump_global_stats()
             }
         Log::write(MY_STATS_LOG, i);
         }
-    schedule 1 min { dump_global_stats() };
+    schedule run_interval { dump_global_stats() };
     }
 
 event zeek_init()
