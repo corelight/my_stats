@@ -24,7 +24,7 @@ event dump_global_stats()
     local start_time = current_time();
     local gs = global_sizes();
     local end_time = current_time();
-    Cluster::log(fmt("global_sizes() took %s seconds to run.", end_time-start_time));
+    Cluster::log(fmt("global_sizes() took %s to run.", end_time-start_time));
     for (key,val in gs)
         {
         local i: MyStatsInfo;
