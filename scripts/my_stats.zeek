@@ -15,7 +15,7 @@ type MyStatsInfo: record
     ts:                         time        &log;
     run:                        count       &log;
     node:                       string      &log;
-    module_name:                string      &log &optional;
+    module_name:                string      &log &default="GLOBAL";
     variable:                   string      &log;
     size:                       count       &log;
     };
