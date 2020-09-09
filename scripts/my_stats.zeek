@@ -4,6 +4,9 @@ export {
     redef enum Log::ID += { MY_STATS_LOG };
     # This is how often global_sizes() is called and reported.
     global run_interval: interval = 1 min;
+    # This is the minimum size a variable must be in order to be logged.
+    # Set to zero to log everything.
+    global min_var_size_to_log = 1024;
 }
 
 # Used to track executions for easier sorting later.
@@ -29,15 +32,18 @@ event dump_global_stats()
     Cluster::log(fmt("global_sizes() took %s to run.", end_time-start_time));
     for (key,val in gs)
         {
-        local i: MyStatsInfo;
-        i = [$ts=current_time(), $run=current_run, 
-             $node=Cluster::node, $variable=key, $size=val];
-        local split_key = split_string(key, /::/);
-        if (|split_key| > 1)
+        if (val >= min_var_size_to_log)
             {
-            i$module_name = split_key[0];
+            local i: MyStatsInfo;
+            i = [$ts=current_time(), $run=current_run, 
+                $node=Cluster::node, $variable=key, $size=val];
+            local split_key = split_string(key, /::/);
+            if (|split_key| > 1)
+                {
+                i$module_name = split_key[0];
+                }
+            Log::write(MY_STATS_LOG, i);
             }
-        Log::write(MY_STATS_LOG, i);
         }
     schedule run_interval { dump_global_stats() };
     }
