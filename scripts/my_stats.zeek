@@ -3,10 +3,10 @@ module my_stats;
 export {
     redef enum Log::ID += { MY_STATS_LOG };
     # This is how often global_sizes() is called and reported.
-    global run_interval: interval = 1 min;
+    global run_interval: interval = 1 min &redef;
     # This is the minimum size a variable must be in order to be logged.
     # Set to zero to log everything.
-    global min_var_size_to_log = 1024;
+    global min_var_size_to_log = 1024 &redef;
 }
 
 # Used to track executions for easier sorting later.
