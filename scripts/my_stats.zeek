@@ -6,7 +6,7 @@ export {
     global run_interval: interval = 1 min;
     # This is the minimum size a variable must be in order to be logged.
     # Set to zero to log everything.
-    global min_var_size_to_log = 0;
+    global min_var_size_to_log = 1024;
 }
 
 # Used to track executions for easier sorting later.
