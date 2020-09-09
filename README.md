@@ -6,4 +6,8 @@ every minute (this interval is configurable).
 
 Each execution of the function is keyed in the log so that individual runs can be pulled.
 
+This package can be installed with the following command:
+
+```zkg install my_stats```
+
 More documentation in the form of a blog post will be coming soon.
