@@ -2,7 +2,7 @@ module my_stats;
 
 export {
     redef enum Log::ID += { MY_STATS_LOG };
-    # This is how often global_sizes() is called and reported.
+    # This is how often global_container_footprints() is called and reported.
     global run_interval: interval = 1 min &redef;
     # This is the minimum size a variable must be in order to be logged.
     # Set to zero to log everything.
@@ -27,10 +27,10 @@ event dump_global_stats()
     {
     current_run += 1;
     local start_time = current_time();
-    local gs = global_sizes();
+    local gcf = global_container_footprints();
     local end_time = current_time();
-    Cluster::log(fmt("global_sizes() took %s to run.", end_time-start_time));
-    for (key,val in gs)
+    Cluster::log(fmt("global_container_footprints() took %s to run.", end_time-start_time));
+    for (key,val in gcf)
         {
         if (val >= min_var_size_to_log)
             {
